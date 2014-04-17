@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ness/ewi/ws/EwiQueryWS.wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://ness.ewi.ws/IWSMain.xsd" name="EwiQueryWS" targetNamespace="http://ness/ewi/ws/EwiQueryWS.wsdl" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ness.ewi.ws/IWSMain.xsd" />
+  </types>
+  <message name="getParams0Request">
+    <part name="queryType" type="xsd:string" />
+  </message>
+  <message name="getParams0Response">
+    <part name="return" type="xsd:base64Binary" />
+  </message>
+  <message name="performQuery1Request">
+    <part name="queryType" type="xsd:string" />
+    <part name="xmlParam" type="xsd:base64Binary" />
+  </message>
+  <message name="performQuery1Response">
+    <part name="return" type="xsd:base64Binary" />
+  </message>
+  <portType name="WSMainPortType">
+    <operation name="getParams">
+      <input name="getParams0Request" message="tns:getParams0Request" />
+      <output name="getParams0Response" message="tns:getParams0Response" />
+    </operation>
+    <operation name="performQuery">
+      <input name="performQuery1Request" message="tns:performQuery1Request" />
+      <output name="performQuery1Response" message="tns:performQuery1Response" />
+    </operation>
+  </portType>
+  <binding name="WSMainBinding" type="tns:WSMainPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getParams">
+      <soap:operation soapAction="" style="rpc" />
+      <input name="getParams0Request">
+        <soap:body use="encoded" namespace="EwiQueryWS" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getParams0Response">
+        <mime:multipartRelated>
+          <mime:part>
+            <soap:body use="encoded" namespace="EwiQueryWS" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+          </mime:part>
+          <mime:part>
+            <mime:content part="return" type="application/octet-stream" />
+          </mime:part>
+        </mime:multipartRelated>
+      </output>
+    </operation>
+    <operation name="performQuery">
+      <soap:operation soapAction="" style="rpc" />
+      <input name="performQuery1Request">
+        <mime:multipartRelated>
+          <mime:part>
+            <soap:body use="encoded" namespace="EwiQueryWS" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+          </mime:part>
+          <mime:part>
+            <mime:content part="xmlParam" type="application/octet-stream" />
+          </mime:part>
+        </mime:multipartRelated>
+      </input>
+      <output name="performQuery1Response">
+        <mime:multipartRelated>
+          <mime:part>
+            <soap:body use="encoded" namespace="EwiQueryWS" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+          </mime:part>
+          <mime:part>
+            <mime:content part="return" type="application/octet-stream" />
+          </mime:part>
+        </mime:multipartRelated>
+      </output>
+    </operation>
+  </binding>
+  <service name="EwiQueryWS">
+    <port name="WSMainPortType" binding="tns:WSMainBinding">
+      <soap:address location="https://wsn.cnb.cz/ewi-ws/EwiSOAPRouter" />
+    </port>
+  </service>
+</definitions>

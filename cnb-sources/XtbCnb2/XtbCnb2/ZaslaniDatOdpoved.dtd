@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT status ((messages?))>
+<!ATTLIST status
+	category CDATA #IMPLIED
+	code CDATA #IMPLIED
+>
+<!ELEMENT messages ((message*))>
+<!ELEMENT message EMPTY>
+<!ATTLIST message
+	type (error | warn | info) #REQUIRED
+	value CDATA #REQUIRED
+>
+<!ELEMENT responseSent (#PCDATA)>
+<!ELEMENT requestReceived (#PCDATA)>
+<!ELEMENT filename (#PCDATA)>
+<!ELEMENT LoadDataResponse ((filename, requestReceived, responseSent, status))>

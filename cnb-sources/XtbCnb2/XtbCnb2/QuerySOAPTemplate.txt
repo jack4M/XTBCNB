@@ -1,0 +1,31 @@
+POST /ewi-ws/EwiSOAPRouter HTTP/1.1
+User-Agent: Oracle JAX-RPC 1.1
+Content-Type: multipart/related; type="text/xml"; start="Part1"; boundary="----=_Boundary"
+Host: apl.cnb.cz
+Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
+Content-Length: ***TOTAL-LENGTH***
+
+------=_Boundary
+Content-Type: text/xml; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-ID: <Part1>
+Content-Length: 508
+
+<?xml version='1.0' encoding='utf-8'?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<SOAP-ENV:Body>
+		<ns1:performQuery xmlns:ns1="EwiQueryWS" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+			<queryType xsi:type="xsd:string">VYDANI_SEZNAM_JH</queryType>
+			<xmlParam href="cid:zbrnda.txt"/>
+		</ns1:performQuery>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+------=_Boundary
+Content-Type: application/octet-stream; name="performQuery.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <zbrnda.txt>
+Content-Disposition: attachment; filename="performQuery.txt"
+Content-Length: ***DATA-LENGTH***
+
+***DATA***
+------=_Boundary--

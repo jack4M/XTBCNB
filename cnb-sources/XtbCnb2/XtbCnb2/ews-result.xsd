@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision:   1.7  $ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="www.ewi.ws" targetNamespace="www.ewi.ws" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:simpleType name="IDType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: ID objektu - øetìzec max.16 znakù</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="16" fixed="false"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IIDType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: IID objektu - interní numerický indetifikátor max. 20 èíslic</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:totalDigits value="20"/>
+			<xsd:fractionDigits value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IDMVType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Kód metodiky - zøetìzení atributù ID a PORADI</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="19"/>
+			<xsd:pattern value=".{1,16}\.\d{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NazevType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Název objektu - øetìzec max. 60 znakù</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PopisType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Popis objektu - volný text</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="VerVarType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: verze nebo varianta - èíslo 0-99</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedByte">
+			<xsd:totalDigits value="2"/>
+			<xsd:fractionDigits value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DatumType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Datum - ve formátu DD.MM.YYYY</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+			<xsd:pattern value="(\d{2}\.\d{2}\.\d{4})?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DatumHHMIType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Datum - ve formátu DD.MM.YYYY HH24:MI</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="16"/>
+			<xsd:pattern value="(\d{2}\.\d{2}\.\d{4}\s\d{2}:\d{2})?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AnoNeType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Indikátor typu Ano/Ne - hodnoty (A/N)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="N"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ZmenaType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Indikátor zmìny - hodnoty (N-nový, Z-zmìna, null-beze zmìny)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+			<xsd:enumeration value="Z"/>
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value=""/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ZmenaUdaje">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Indikátor zmìny údaje - zatím nedoøešeno - hodnoty (nový, obsahová zmìna, formální zmìna)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="RadekSloupecType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Souøadnice údaje ve struktuøe - èíslo 1 - 99999</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedInt">
+			<xsd:fractionDigits value="0"/>
+			<xsd:totalDigits value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DatatypType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Datatyp údaje - øetìzec max. 20 znakù</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DelkaType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Délka hodnoty - èíslo 1 - 99999</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedInt">
+			<xsd:totalDigits value="5"/>
+			<xsd:fractionDigits value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DesetinyType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Poèet desetinných míst - èíslo 1 - 999999</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedInt">
+			<xsd:totalDigits value="6"/>
+			<xsd:fractionDigits value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NasobekType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Násobek údaje - celoèíselný násobitel øádu 10^n (n >= 0)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedInt">
+			<xsd:totalDigits value="10"/>
+			<xsd:fractionDigits value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MaskaType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Maska údaje - øetìzec max. 35 znakù</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MezIntervaluType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Horní/Dolní mez intervalu - øetìzec max. 60 znakù</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DimenzeTypType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Typ dimenze - hodnoty (K, S, D)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+			<xsd:enumeration value="K"/>
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="D"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UcTypVazbyType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Typ úèetní vazby - hodnoty (DZ, VKZ, KO, VDO, KDO, VKO, DO, VO, VDZ, KZ, VZ)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="2"/>
+			<xsd:maxLength value="3"/>
+			<xsd:enumeration value="DZ"/>
+			<xsd:enumeration value="VKZ"/>
+			<xsd:enumeration value="KO"/>
+			<xsd:enumeration value="VDO"/>
+			<xsd:enumeration value="KDO"/>
+			<xsd:enumeration value="VKO"/>
+			<xsd:enumeration value="DO"/>
+			<xsd:enumeration value="VO"/>
+			<xsd:enumeration value="VDZ"/>
+			<xsd:enumeration value="KZ"/>
+			<xsd:enumeration value="VZ"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UcOperatorType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Operátor úèetní vazby - hodnoty (M, NULL)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UcCastType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Èást úètu - hodnoty (C, A)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+			<xsd:enumeration value="C"/>
+			<xsd:enumeration value="A"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UcVyberoveType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Výbìrovì úèet - hodnoty (V, NULL)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VyskytStavType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Stav výskytu - hodnoty (-1, 10, 15, 18, 20, 30, 40, 50, 55, 65)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:byte">
+			<xsd:enumeration value="-1"/>
+			<xsd:enumeration value="10"/>
+			<xsd:enumeration value="15"/>
+			<xsd:enumeration value="18"/>
+			<xsd:enumeration value="20"/>
+			<xsd:enumeration value="30"/>
+			<xsd:enumeration value="40"/>
+			<xsd:enumeration value="50"/>
+			<xsd:enumeration value="55"/>
+			<xsd:enumeration value="65"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CisloVydani">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Èíslo vydání - celé èíslo max. 14 èíslic</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:unsignedLong">
+			<xsd:totalDigits value="14"/>
+			<xsd:fractionDigits value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VydaniStavType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ: Stav vydání - hodnoty (-1, 0, 5, 10, 15, 16, 17, 18, 19, 20, 31, 32, 51, 52, 59, 61, 62, 99)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:byte">
+			<xsd:enumeration value="-1"/>
+			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="5"/>
+			<xsd:enumeration value="10"/>
+			<xsd:enumeration value="15"/>
+			<xsd:enumeration value="16"/>
+			<xsd:enumeration value="17"/>
+			<xsd:enumeration value="18"/>
+			<xsd:enumeration value="19"/>
+			<xsd:enumeration value="20"/>
+			<xsd:enumeration value="31"/>
+			<xsd:enumeration value="32"/>
+			<xsd:enumeration value="51"/>
+			<xsd:enumeration value="52"/>
+			<xsd:enumeration value="59"/>
+			<xsd:enumeration value="61"/>
+			<xsd:enumeration value="62"/>
+			<xsd:enumeration value="99"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DomenaAttrType">
+		<xsd:annotation>
+			<xsd:documentation>Atribut domény referenèních kódù (øetìzec max 240 znakù)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="MetodikaType" final="extension">
+		<xsd:annotation>
+			<xsd:documentation>Metodika vykazování</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDMVType">
+				<xsd:annotation>
+					<xsd:documentation>Kód metodiky</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="KodFO" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód funkèní oblasti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PlanOd" type="DatumType">
+				<xsd:annotation>
+					<xsd:documentation>Datum poèátku platnosti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PlanDo" type="DatumType">
+				<xsd:annotation>
+					<xsd:documentation>Datum konce  platnosti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MetodikaKodType">
+		<xsd:annotation>
+			<xsd:documentation>Metodika vykazování - pouze kód</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDMVType">
+				<xsd:annotation>
+					<xsd:documentation>Kód metodiky</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DatSouborType" final="extension">
+		<xsd:annotation>
+			<xsd:documentation>Datový soubor</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Verze" type="VerVarType">
+				<xsd:annotation>
+					<xsd:documentation>Verze datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Varianta" type="VerVarType">
+				<xsd:annotation>
+					<xsd:documentation>Varianta datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Nazev" type="NazevType">
+				<xsd:annotation>
+					<xsd:documentation>Název datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Popis" type="PopisType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Textový popis datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndZmeny" type="ZmenaType">
+				<xsd:annotation>
+					<xsd:documentation>Indikace nového nebo zmìnìného datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DatSouborKodType">
+		<xsd:annotation>
+			<xsd:documentation>Datový soubor - pouze kód</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DatSouborKodVerType">
+		<xsd:annotation>
+			<xsd:documentation>Datový soubor - kód, verze, varianta</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Verze" type="VerVarType">
+				<xsd:annotation>
+					<xsd:documentation>Verze datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Varianta" type="VerVarType">
+				<xsd:annotation>
+					<xsd:documentation>Varianta datového souboru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DatOblastType" final="extension">
+		<xsd:annotation>
+			<xsd:documentation>Datová oblast</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód datové oblasti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Nazev" type="NazevType">
+				<xsd:annotation>
+					<xsd:documentation>Název datové oblasti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Popis" type="PopisType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Textový popis datové oblasti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndZmeny" type="ZmenaType">
+				<xsd:annotation>
+					<xsd:documentation>Indikace nové nebo zmìnìné datové oblasti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DatOblastKodType">
+		<xsd:annotation>
+			<xsd:documentation>Datová oblast - pouze kód</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód datové oblasti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DimenzeType">
+		<xsd:annotation>
+			<xsd:documentation>Dimenze</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód dimenze - øetìzec IP, nebo kód parametru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Nazev" type="NazevType">
+				<xsd:annotation>
+					<xsd:documentation>Název dimenze - øetìzec IP nebo název parametru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Popis" type="PopisType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Popis dimenze - øetìzec IP, nebo popis parametru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Dynamicka" type="AnoNeType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DimenzeKodType">
+		<xsd:annotation>
+			<xsd:documentation>Dimenze - pouze kód</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód dimenze - øetìzec IP, nebo kód parametru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DimenzeHodnotaType">
+		<xsd:annotation>
+			<xsd:documentation>Hodnota dimenze - (informaèní prvek, položka èíselníku, doména nad datovým typem)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="InformacniPrvek" type="InformacniPrvekType">
+					<xsd:annotation>
+						<xsd:documentation>Informaèní prvek</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="PolozkaCiselniku" type="PolozkaCiselnikuType">
+					<xsd:annotation>
+						<xsd:documentation>Položka èíselníku</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="DomenaNadDT" type="DomenaNadDTType">
+					<xsd:annotation>
+						<xsd:documentation>Doména nad datovým typem</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DoDimenzeHodnota">
+		<xsd:annotation>
+			<xsd:documentation>Hodnota dimenze v datové oblasti - (informaèní prvek, položka èíselníku, souèet za datový typ, výèet hodnot, doména nad èíselníkem, doména nad datovým typem)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód dimenze - øetìzec IP, nebo kód parametru</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TypDimenze" type="DimenzeTypType">
+				<xsd:annotation>
+					<xsd:documentation>Typ dimenze - K-konstantní/S-statická/D-dynamická</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HodnotaDimenze" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Hodnota dimenze - informaèní prvek, položka èíselníku, doména nad datovým typem</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndSouctova" type="AnoNeType">
+				<xsd:annotation>
+					<xsd:documentation>Indikátor souètové hodnoty</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatovyTyp" type="DatovyTypPAType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Datový typ hodnoty dimenze - pouze pokud je hodnotou dynamického parametru hodnota z domény nad datovým typem</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InformacniPrvekType">
+		<xsd:annotation>
+			<xsd:documentation>Informaèní prvek</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód informaèního prvku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Nazev" type="NazevType">
+				<xsd:annotation>
+					<xsd:documentation>Název informaèního prvku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Popis" type="PopisType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Popis informaèního prvku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndZmeny" type="ZmenaType">
+				<xsd:annotation>
+					<xsd:documentation>Indikace nového nebo zmìnìného informaèního prvku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InformacniPrvekKodType">
+		<xsd:annotation>
+			<xsd:documentation>Informaèní prvek - pouze kód</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód informaèního prvku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PolozkaCiselnikuType">
+		<xsd:annotation>
+			<xsd:documentation>Položka èíselníku</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód položky èíselníku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Nazev" type="NazevType">
+				<xsd:annotation>
+					<xsd:documentation>Název položky èíselníku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Popis" type="PopisType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Popis položky èíselníku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndZmeny" type="ZmenaType">
+				<xsd:annotation>
+					<xsd:documentation>Indikace nové nebo zmìnìné položky èíselníku</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="ElementarniPolozka" type="IDType">
+					<xsd:annotation>
+						<xsd:documentation>Elementární položka k souètové položce èíselníku</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DomenaNadDTType">
+		<xsd:annotation>
+			<xsd:documentation>Doména nad datovým typem</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Kod" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód domény nad datovým typem</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Nazev" type="NazevType">
+				<xsd:annotation>
+					<xsd:documentation>Název domény nad datovým typem</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Popis" type="PopisType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Popis domény nad datovým typem</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndZmeny" type="ZmenaType">
+				<xsd:annotation>
+					<xsd:documentation>Indikace nové nebo zmìnìné domény nad datovým typem</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UdajType">
+		<xsd:annotation>
+			<xsd:documentation>Údaj v datové oblasti</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IID" type="IIDType">
+				<xsd:annotation>
+					<xsd:documentation>Interní identifikátor údaje</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndZmeny" type="ZmenaUdaje">
+				<xsd:annotation>
+					<xsd:documentation>Indikace zmìny údaje - (Nový, obsahová zmìna, formální zmìna)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Radek" type="RadekSloupecType">
+				<xsd:annotation>
+					<xsd:documentation>Èíslo øádku ve struktuøe datové oblasti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Sloupec" type="RadekSloupecType">
+				<xsd:annotation>
+					<xsd:documentation>Èíslo spoupce ve struktuøe datové oblasti</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Souctovy" type="AnoNeType">
+				<xsd:annotation>
+					<xsd:documentation>Indikace souètového údaje</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Dynamicky" type="AnoNeType">
+				<xsd:annotation>
+					<xsd:documentation>Indikace  Dynamického údaje</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatovyTyp" type="DatovyTypUDType">
+				<xsd:annotation>
+					<xsd:documentation>Datový typ údaje (Datový typ, násobek, maska)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SemantickyPopis" type="SemantickyPopisType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Sémantický popis údaje</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ParametrType">
+		<xsd:annotation>
+			<xsd:documentation>Parametr jako souèást sémantického popisu údaje - (kód, hodnota)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="Kod" type="IDType" use="required"/>
+		<xsd:attribute name="Hodnota" type="IDType" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="SemantickyPopisType" final="#all">
+		<xsd:annotation>
+			<xsd:documentation>Sémantický popis údaje</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Parametr" type="ParametrType" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Dvojice (kód,hodnota) parametru nebo dvojice('IP', kód IP)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DatovyTypUDType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ údaje</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="Datatyp" type="DatatypType" use="required"/>
+		<xsd:attribute name="Nasobek" type="NasobekType" use="optional"/>
+		<xsd:attribute name="Maska" type="MaskaType" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="DatovyTypPAType">
+		<xsd:annotation>
+			<xsd:documentation>Datový typ parametru</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="Datatyp" type="DatatypType" use="required"/>
+		<xsd:attribute name="Maska" type="MaskaType" use="optional"/>
+		<xsd:attribute name="Delka" type="DelkaType" use="required"/>
+		<xsd:attribute name="Desetiny" type="DesetinyType" use="optional"/>
+		<xsd:attribute name="HorniMez" type="MezIntervaluType" use="optional"/>
+		<xsd:attribute name="DolniMez" type="MezIntervaluType" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="UcetType">
+		<xsd:annotation>
+			<xsd:documentation>Úèet ve vazbì na informaèní prvek</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="Kod" type="IDType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Kód úètu</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="TypVazby" type="UcTypVazbyType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Typ vazby úètu na informaèní prvek (kreditní zùstatek, debetní zùstatek, ...)</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="Cast" type="UcCastType" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Èást úètu ve vazbì na informaèní prvek</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="Operator" type="UcOperatorType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Aritmetický operátor (pøièíst/odeèíst)</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="Vyberove" type="UcVyberoveType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Povinné/nepovinné zahrnutí úètu ve vazbì na informaèní prvek</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="VyskytType">
+		<xsd:annotation>
+			<xsd:documentation>Výskyt datového souboru</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Subjekt" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Kód vykazujícího subjektu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Obdobi" type="DatumType">
+				<xsd:annotation>
+					<xsd:documentation>Stav_ke_dni daného výskytu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Rozsah" type="IDType">
+				<xsd:annotation>
+					<xsd:documentation>Rozsah vykazujícího subjektu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StavKod" type="VyskytStavType">
+				<xsd:annotation>
+					<xsd:documentation>Numerický kód stavu výskytu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Stav" type="NazevType">
+				<xsd:annotation>
+					<xsd:documentation>Textový popis stavu výskytu</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PlanDo" type="DatumHHMIType">
+				<xsd:annotation>
+					<xsd:documentation>Požadovaný termín dodání dat k výskytu ve formátu DD.MM.YYYY HH24:MI</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Termin" type="DatumHHMIType">
+				<xsd:annotation>
+					<xsd:documentation>Aktuální požadovaný termín dodání (napø. v pøípadì opravy) ve formátu DD.MM.YYYY HH24:MI</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Testovaci">
+				<xsd:annotation>
+					<xsd:documentation>Rozlišení Testovací/Provozní výskyt</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="NazevType">
+						<xsd:enumeration value="Testovací"/>
+						<xsd:enumeration value="Provozní"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VydaniType">
+		<xsd:annotation>
+			<xsd:documentation>Vydání datového souboru</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SouborExt" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Název souboru zprávy (s pøíponou); pro vydání ve stavu 5 ("Pøipravené") soubor zprávy neexistuje</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:length value="18"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="CisloVydani" type="CisloVydani">
+				<xsd:annotation>
+					<xsd:documentation>Èíslo vydání</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DatumPrijmu" type="DatumHHMIType">
+				<xsd:annotation>
+					<xsd:documentation>Datum založení vydání do databáze ve formátu DD.MM.YYYY HH24:MI</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StavKod" type="VydaniStavType">
+				<xsd:annotation>
+					<xsd:documentation>Numerický kód stavu vydání</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Stav" type="DomenaAttrType">
+				<xsd:annotation>
+					<xsd:documentation>Textový popis stavu vydání</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StavOd" type="DatumHHMIType">
+				<xsd:annotation>
+					<xsd:documentation>Datum, kdy bylo vydání pøevedeno do daného stavu ve formátu DD.MM.YYYY HH24:MI</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Druh" type="NazevType">
+				<xsd:annotation>
+					<xsd:documentation>Rozlišení  Pøipravené/Odeslané vydání</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ChybaZpracovani" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Protokol o chybì pøi zpracování vydání</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:attribute name="Kod" type="DomenaAttrType" use="required">
+						<xsd:annotation>
+							<xsd:documentation>Kód typu chyby</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="Msg" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Chybové hlášení</xsd:documentation>
+						</xsd:annotation>
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:length value="2000"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ChybnyKrokKontroly" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Chybný krok jednovýkazové kontroly</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DetailChyby" minOccurs="0" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Detail chyby kroku kontroly</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:attribute name="Poradi" type="DelkaType" use="required">
+									<xsd:annotation>
+										<xsd:documentation>Poøadí zápisu v detailu chyby</xsd:documentation>
+									</xsd:annotation>
+								</xsd:attribute>
+								<xsd:attribute name="Msg" use="required">
+									<xsd:annotation>
+										<xsd:documentation>Text zápisu v detailu chyby</xsd:documentation>
+									</xsd:annotation>
+									<xsd:simpleType>
+										<xsd:restriction base="xsd:string">
+											<xsd:length value="2000"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:attribute>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:attribute name="Kod" type="IDType" use="required">
+						<xsd:annotation>
+							<xsd:documentation>Kód kroku kontroly</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="Msg" type="xsd:string" use="optional">
+						<xsd:annotation>
+							<xsd:documentation>Uživatelský název kroku kontroly (ne sémantický popis kroku)</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="Druh" type="DomenaAttrType" use="required">
+						<xsd:annotation>
+							<xsd:documentation>Kód druhu kroku kontroly</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="JmenoHodnotaType">
+		<xsd:annotation>
+			<xsd:documentation>Dvojice (jméno, hodnota) - oba prvky typu øetìzec</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="Jmeno" type="xsd:string" use="required"/>
+		<xsd:attribute name="Hodnota" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+	<xsd:element name="DotazTyp" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>Typ dotazu</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DotazParametr" type="JmenoHodnotaType">
+		<xsd:annotation>
+			<xsd:documentation>Parametr dotazu - dvojice (jméno, hodnota)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Dotaz">
+		<xsd:annotation>
+			<xsd:documentation>Opis zadání dotazu do výsledku</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="DotazTyp"/>
+				<xsd:element ref="DotazParametr" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="MetodikySeznam">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Seznam metodik</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="Metodika" type="MetodikaType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DatoveSouborySeznam">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Seznam datových souborù</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="Metodika" type="MetodikaKodType"/>
+				<xsd:element name="DatovySoubor" type="DatSouborType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DimenzeSeznam">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Seznam dimenzí</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="Metodika" type="MetodikaKodType"/>
+				<xsd:element name="Dimenze" type="DimenzeType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DatoveSouboryObsah">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Obsah datového souboru</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="Metodika" type="MetodikaKodType"/>
+				<xsd:element name="DatovySoubor" type="DatSouborKodType"/>
+				<xsd:element name="DatovaOblast" type="DatOblastType"/>
+				<xsd:element name="Udaj" type="UdajType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DimenzeObsah">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Obsah dimenzí</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="Metodika" type="MetodikaKodType"/>
+				<xsd:element name="Dimenze" type="DimenzeKodType">
+					<xsd:annotation>
+						<xsd:documentation/>
+						<xsd:documentation> Kód dimenze (øetìzec 'IP', nebo kód parametru)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="HodnotaDimenze" type="DimenzeHodnotaType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="DatovaOblastDimenze">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Dimenze datové oblasti</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="Metodika" type="MetodikaKodType"/>
+				<xsd:element name="DatovaOblast" type="DatOblastKodType"/>
+				<xsd:element name="Dimenze" type="DoDimenzeHodnota"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Ucetnictvi">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Vazba na úèetnictví</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="Metodika" type="MetodikaKodType"/>
+				<xsd:element name="InformacniPrvek" type="InformacniPrvekKodType"/>
+				<xsd:element name="VazbaNaUcet" type="UcetType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="VyskytySeznam">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Seznam výskytù datového souboru</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="DatovySoubor" type="DatSouborKodVerType"/>
+				<xsd:element name="Vyskyt" type="VyskytType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="VydaniSeznam">
+		<xsd:annotation>
+			<xsd:documentation>Dotaz typu: Seznam vydání (informace o zpracování)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="DatovySoubor" type="DatSouborKodVerType"/>
+				<xsd:element name="Vyskyt" type="VyskytType"/>
+				<xsd:element name="Vydani" type="VydaniType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="EwiWSResult">
+		<xsd:annotation>
+			<xsd:documentation>Výsledek zpracování </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="Dotaz"/>
+				<xsd:choice minOccurs="0">
+					<xsd:element ref="MetodikySeznam"/>
+					<xsd:element ref="DatoveSouborySeznam"/>
+					<xsd:element ref="VyskytySeznam"/>
+					<xsd:element ref="DimenzeSeznam"/>
+					<xsd:element ref="DatoveSouboryObsah"/>
+					<xsd:element ref="DimenzeObsah"/>
+					<xsd:element ref="DatovaOblastDimenze"/>
+					<xsd:element ref="Ucetnictvi"/>
+					<xsd:element ref="VydaniSeznam"/>
+				</xsd:choice>
+				<xsd:element name="ErrorLog">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Status">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="SUCCESS"/>
+										<xsd:enumeration value="ERROR"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="ErrorCode" type="xsd:string"/>
+							<xsd:element name="ErrorText" type="xsd:string"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

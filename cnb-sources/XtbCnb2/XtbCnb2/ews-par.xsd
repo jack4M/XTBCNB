@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision:   1.1  $ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xsd:simpleType name="TypDotazuType">
+        <xsd:annotation>
+            <xsd:documentation>Datový typ: Typ dotazu - řetězec max. 30 znaků s maskou</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="30"/>
+            <xsd:pattern value="[A-Z]([0-9A-Z]|_){1,29}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="IDType">
+        <xsd:annotation>
+            <xsd:documentation>Datový typ: ID objektu - řetězec max.16 znaků</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="16"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="AnoNeType">
+        <xsd:annotation>
+            <xsd:documentation>Datový typ: Indikátor typu Ano/Ne - hodnoty (A/N)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="A"/>
+            <xsd:enumeration value="N"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NazevType">
+        <xsd:annotation>
+            <xsd:documentation>Datový typ: Název objektu - řetězec max. 60 znaků</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="60"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PopisType">
+        <xsd:annotation>
+            <xsd:documentation>Datový typ: Popis objektu - volný text</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="DatatypType">
+        <xsd:annotation>
+            <xsd:documentation>Datový typ: Základní datový typ parametru - řetězec max. 20 znaků</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="20"/>
+            <xsd:enumeration value="Number"/>
+            <xsd:enumeration value="Date"/>
+            <xsd:enumeration value="String"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="MaskaType">
+        <xsd:annotation>
+            <xsd:documentation>Datový typ: Maska parametru - řetězec max. 35 znaků</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="35"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="JmenoHodnotaType">
+        <xsd:annotation>
+            <xsd:documentation>Dvojice (jméno, hodnota) - oba prvky typu řetezec</xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="Default" type="AnoNeType" use="required"/>
+        <xsd:attribute name="Jmeno" type="xsd:string" use="required"/>
+        <xsd:attribute name="Hodnota" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+    <xsd:complexType name="SeznamHodnotType">
+        <xsd:annotation>
+            <xsd:documentation>Seznam povolených hodnot parametru</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="Hodnota" type="JmenoHodnotaType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ParametrType">
+        <xsd:annotation>
+            <xsd:documentation>Parametr dotazu</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="Popis" type="PopisType">
+                <xsd:annotation>
+                    <xsd:documentation>Popis parametru</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SeznamHodnot" type="SeznamHodnotType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Seznam povolených hodnot parametru</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="HodnotaPar" type="xsd:string" nillable="true"/>
+        </xsd:sequence>
+        <xsd:attribute name="Nazev" type="NazevType" use="required"/>
+        <xsd:attribute name="Datatyp" type="DatatypType" use="required"/>
+        <xsd:attribute name="Povinny" type="AnoNeType" use="required"/>
+        <xsd:attribute name="Maska" type="MaskaType" use="optional"/>
+    </xsd:complexType>
+    <xsd:element name="DefiniceDotazu">
+        <xsd:annotation>
+            <xsd:documentation>Definice dotazu</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="TypDotazu" type="TypDotazuType"/>
+                <xsd:element name="Popis" type="PopisType">
+                    <xsd:annotation>
+                        <xsd:documentation>Popis dotazu</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="Parametr" type="ParametrType" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:annotation>
+                        <xsd:documentation>Sada parametrů dotazu</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

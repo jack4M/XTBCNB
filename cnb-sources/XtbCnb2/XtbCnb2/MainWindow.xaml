@@ -1,0 +1,291 @@
+﻿<ribbon:RibbonWindow x:Name="window" x:Class="XtbCnb2.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+	xmlns:shared="http://schemas.actiprosoftware.com/winfx/xaml/shared"
+	xmlns:ribbon="http://schemas.actiprosoftware.com/winfx/xaml/ribbon"
+	xmlns:themes="http://schemas.actiprosoftware.com/winfx/xaml/themes"
+	xmlns:wizard="http://schemas.actiprosoftware.com/winfx/xaml/wizard"
+    xmlns:docking="http://schemas.actiprosoftware.com/winfx/xaml/docking" 
+	Icon="Resources/Images/ActiproIcon.ico"
+	Width="600" Height="450" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" 
+	ApplicationName="XTB CNB" 
+	DocumentName="{Binding ElementName=wizard, Path=SelectedPage.Title}"
+    themes:ThemeManager.Theme="Office2007Blue"
+    xmlns:gds="clr-namespace:XtbCnb2"
+>
+
+    <Window.Resources>
+        <gds:TestStateToColor x:Key="TestStateToColor" />
+
+        <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle StrokeThickness="1" Stroke="Black" StrokeDashArray="1 2" SnapsToDevicePixels="true" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Sidebar ListBox style -->
+        <Style x:Key="SidebarListBoxStyle" TargetType="ListBox">
+            <Style.Resources>
+                <!-- Background of selected item when focussed -->
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Red" />
+                <!-- Background of selected item when not focussed -->
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="AliceBlue" />
+            </Style.Resources>
+            <Setter Property="Background" Value="{DynamicResource {x:Static themes:RibbonCommonDictionary.WindowWorkspaceBackgroundBrushKey}}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate DataType="wizard:WizardPage">
+                        <TextBlock FontSize="12" Text="{Binding Title}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border Background="{TemplateBinding Background}">
+                            <DockPanel LastChildFill="True">
+                                <TextBlock DockPanel.Dock="Top" Margin="10" FontWeight="Bold" FontSize="12" Text="Current Step:" />
+                                <ItemsPresenter Margin="10,0,10,10" />
+                            </DockPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Wizard style with sidebar -->
+        <Style TargetType="wizard:Wizard">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type wizard:Wizard}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <DockPanel LastChildFill="True">
+                                <Rectangle DockPanel.Dock="Right" Width="1" Fill="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" SnapsToDevicePixels="True" />
+                                <Rectangle DockPanel.Dock="Right" Width="1" Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" SnapsToDevicePixels="True" />
+                                <ListBox Style="{StaticResource SidebarListBoxStyle}" 
+									ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Items}"
+									SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedPage}"
+									/>
+                            </DockPanel>
+
+                            <wizard:WizardPagePresenter x:Name="PART_TransitionPresenter" Grid.Column="1" 
+								DefaultDirection="{TemplateBinding TransitionDefaultDirection}" 
+								TransitionSelector="{TemplateBinding TransitionSelector}" />
+
+                            <wizard:WizardButtonContainer x:Name="PART_ButtonContainer" Grid.Row="1" Grid.ColumnSpan="2" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <wizard:Wizard SelectedIndex="0" x:Name="wizard" WindowTitleBehavior="PageTitle" WindowTitleBaseText="XtbCnb" SelectedPageChanged="wizard_SelectedPageChanged" Margin="0" Padding="0" PageSequenceType="Stack">
+        <wizard:Wizard.TransitionSelector>
+            <shared:MultiTransitionSelector>
+                <!-- This adds a single bar wipe transition -->
+                <shared:BarWipeTransition />
+            </shared:MultiTransitionSelector>
+        </wizard:Wizard.TransitionSelector>
+
+        <!-- Welcome page -->
+        <wizard:WizardPage x:Name="welcomePage" Title="Welcome" PageType="Blank">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock DataContext="{x:Static gds:GeneralDataSource.GeneralDataSourceSingleton}" Grid.Row="1" TextWrapping="Wrap" FontSize="16" FontWeight="Bold" Padding="10" Text="{Binding WelcomeInfo}" />
+                <TextBlock Grid.Row="2" TextWrapping="Wrap" Padding="10">This wizard will walk you through the process of mandatory report submission to CNB. Please note you can maximize this window in order to get a better view of any data presented.<LineBreak /><LineBreak />If you want to query CNB for a previous submission result, <Hyperlink Click="Hyperlink_Click_1">click here</Hyperlink>.</TextBlock>
+                <TextBlock Grid.Row="3" TextWrapping="Wrap" Padding="10">To continue, click Next.</TextBlock>
+            </Grid>
+        </wizard:WizardPage>
+
+        <!-- File selection -->
+        <wizard:WizardPage x:Name="processingPage" Title="1. Data File Selection" Caption="Select an XML file to load" Description="The file will be read and subsequently processed.">
+            <StackPanel VerticalAlignment="Center">
+                <Button x:Name="startProcessingButton" Width="200" Click="startProcessingButton_Click">Load XML File</Button>
+                <TextBlock Margin="0,0,0,3" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="progressTextBlock" Margin="0,0,0,3" HorizontalAlignment="Center">Not started</TextBlock>
+                <ProgressBar x:Name="progressBar" Margin="0,0,0,7"  Width="200" Height="18" Value="0" />
+            </StackPanel>
+        </wizard:WizardPage>
+
+        <!-- Check headers -->
+        <wizard:WizardPage x:Name="headerPage" Title="2: Check Header Info" Caption="Check the data header" Description="These are are most important items from the file's header section.">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top"
+                    DataContext="{x:Static gds:GeneralDataSource.GeneralDataSourceSingleton}"
+                    Background="{Binding Data.IsTest, Converter={StaticResource TestStateToColor}, ConverterParameter=color}"
+                    TextAlignment="Center" Text="{Binding Data.IsTest, Converter={StaticResource TestStateToColor}, ConverterParameter=text}"></TextBlock>
+                <ListView DataContext="{x:Static gds:GeneralDataSource.GeneralDataSourceSingleton}" ItemsSource="{Binding DataHeaders}" DockPanel.Dock="Top" IsEnabled="True" IsHitTestVisible="False" BorderThickness="0" Background="#10000000">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock FontWeight="Bold" Text="{Binding Key}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Value}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <!--
+                            <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                   ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                   MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                                   ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}" Orientation="Vertical" />
+-->
+                            <WrapPanel
+                                Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                Orientation="Horizontal"
+                                />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+            </DockPanel>
+        </wizard:WizardPage>
+
+        <!-- Check data -->
+        <wizard:WizardPage x:Name="dataPage" Title="3: Check Data" Caption="Check data contained in the file" Description="Please check if the data looks correct.">
+            <Grid>
+                <docking:DockSite x:Name="dockSite" CanDocumentWindowsRaft="True">
+                    <docking:Workspace>
+                        <docking:TabbedMdiHost x:Name="tabbedMdiHost">
+                            <docking:TabbedMdiContainer DataContext="{x:Static gds:GeneralDataSource.GeneralDataSourceSingleton}" ItemsSource="{Binding DataWindows}">
+                                <!--<docking:DocumentWindow Title="Document1.txt" Description="Text document" FileName="Document1.rtf">
+                                    <TextBox BorderThickness="0" TextWrapping="Wrap"
+									Text="This QuickStart shows how you can use the DockSite to host tabbed documents without any tool window functionality.  Use the File/New menu item to add more documents or try out the various other menu options available." />
+                                </docking:DocumentWindow>-->
+                            </docking:TabbedMdiContainer>
+                        </docking:TabbedMdiHost>
+                    </docking:Workspace>
+                </docking:DockSite>
+            </Grid>
+        </wizard:WizardPage>
+
+        <!-- Credentials -->
+        <wizard:WizardPage x:Name="credentialsPage" Title="4. Credentials" Caption="Submission credentials" Description="Please fill in your user name and password and select a PKCS#7 certificate file before proceeding to submission.">
+            <StackPanel VerticalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Padding="5" Width="100">User name:</TextBlock>
+                    <TextBox x:Name="username" Width="200" TextChanged="username_TextChanged" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Padding="5" Width="100">Password:</TextBlock>
+                    <PasswordBox x:Name="password" Width="200" TextInput="password_TextInput" KeyUp="password_KeyUp" PasswordChanged="password_PasswordChanged" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <CheckBox Content="Remember password" Height="16" Name="checkBox_rememberUserPswd" />
+                </StackPanel>
+                <TextBlock Height="10" />
+                <TextBlock HorizontalAlignment="Center">Certificate path:</TextBlock>
+                <TextBox x:Name="certFilename" Width="300" IsEnabled="False" />
+                <Button Width="100" Click="Button_Click">Load certificate</Button>
+                <TextBlock Height="10" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Padding="5" Width="100" TextWrapping="Wrap">Certificate password (if protected):</TextBlock>
+                    <PasswordBox x:Name="certPassword" Width="200" Height="25" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <CheckBox Content="Remember password" Height="16" Name="checkBox_rememberCertificatePswd" />
+                </StackPanel>
+            </StackPanel>
+        </wizard:WizardPage>
+
+        <!-- Confirmation (if live data) -->
+        <wizard:WizardPage x:Name="confirmationPage" Title="5: Confirmation" Caption="Final confirmation" Description="This is the final confirmation. After this, the data will be sent.">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" FontSize="13" FontWeight="Bold" Foreground="DarkRed" HorizontalAlignment="Center">You're about to submit live data to CNB.</TextBlock>
+                <TextBlock DockPanel.Dock="Bottom">By pressing Next, the submission process will start.</TextBlock>
+                <CheckBox x:Name="TotallySure" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="TotallySure_Checked" Unchecked="TotallySure_Unchecked">Yes, I'm absolutely sure what I'm doing</CheckBox>
+            </DockPanel>
+        </wizard:WizardPage>
+
+        <!-- Submission -->
+        <wizard:WizardPage x:Name="submissionPage" Title="6. Submission" Caption="Submitting data" Description="The data is being chooped into segments and submitted. This may take a while.">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Margin="0,0,0,3" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="submissionTextBlock" Margin="0,0,0,3" HorizontalAlignment="Center">Not started</TextBlock>
+                <ProgressBar x:Name="submissionProgressBar" Margin="0,0,0,7"  Width="200" Height="18" Value="0" />
+            </StackPanel>
+        </wizard:WizardPage>
+
+        <!-- Submission result -->
+        <wizard:WizardPage x:Name="resultPage" Title="7. Submission Result" Caption="Submission status" Description="This page allows you to check for status of data you submitted -- not just now, but also in the past.">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap">Pick an XML file you've already submitted here or leave it as is if you've just uploaded one.</TextBlock>
+                <DockPanel DockPanel.Dock="Top">
+                    <Button Click="Button_Click_2">Choose XML</Button>
+                    <TextBox x:Name="resultFilename" TextWrapping="Wrap" IsReadOnly="True" />
+                </DockPanel>
+                <TextBlock DockPanel.Dock="Top" Margin="0,0,0,3" HorizontalAlignment="Center" />
+                <Button x:Name="resultButton" DockPanel.Dock="Top" IsEnabled="True" Click="Button_Click_1">Check CNB Processing Result</Button>
+                <DockPanel DockPanel.Dock="Top">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Label Content="" Height="28" Name="labelCheckResultProgress" Visibility="Hidden"/>
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top">
+                        <StackPanel HorizontalAlignment="Center">
+                        <ProgressBar Height="20" Name="progressBarCheckResult" Width="200" Visibility="Hidden"/>
+                    </StackPanel>
+                </DockPanel>
+
+                <TextBlock DockPanel.Dock="Top" Margin="0,0,0,3" HorizontalAlignment="Center" />
+                <ListView DataContext="{x:Static gds:GeneralDataSource.GeneralDataSourceSingleton}" ItemsSource="{Binding ResultHighlights}" DockPanel.Dock="Top" IsEnabled="True" IsHitTestVisible="False" BorderThickness="0" Background="#10000000">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock FontWeight="Bold" Text="{Binding Key}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Value}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel
+                                Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                                Orientation="Horizontal"
+                                />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+                <TextBlock DockPanel.Dock="Top" Margin="0,0,0,3" HorizontalAlignment="Center" />
+                <TextBlock DockPanel.Dock="Top">Result details:</TextBlock>
+                <TextBox x:Name="resultDetail" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
+            </DockPanel>
+        </wizard:WizardPage>
+
+        <!-- Done -->
+        <wizard:WizardPage x:Name="donePage" Title="Done" PageType="Blank">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock TextWrapping="Wrap" FontSize="16" FontWeight="Bold" Padding="10">Submission completed</TextBlock>
+                <TextBlock TextWrapping="Wrap" Padding="10">The responses from CNB were:<LineBreak />- success.<LineBreak />- success<LineBreak />- success<LineBreak />- success</TextBlock>
+                <TextBlock TextWrapping="Wrap" Padding="10">You may now <Hyperlink Click="Hyperlink_Click">submit another file</Hyperlink> or press Finish to quit.</TextBlock>
+            </StackPanel>
+        </wizard:WizardPage>
+
+    </wizard:Wizard>
+
+</ribbon:RibbonWindow>

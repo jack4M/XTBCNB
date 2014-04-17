@@ -1,0 +1,52 @@
+HTTP/1.1 200 OK
+Date: Fri, 03 Dec 2010 12:01:30 GMT
+Server: Oracle-Application-Server-10g
+Content-Length: 1780
+Set-Cookie: JSESSIONID=0a0402be1f45588b2f4a4df942d88ee2b3210ba3bcb5; Path=/ewi-ws; secure
+Cache-Control: private
+Content-Type: multipart/related; boundary="----=_Part_1677_7077388.1291376892611"; type="text/xml"; start="17493983.1291376892611.apache-soap.azdnms84"
+
+------=_Part_1677_7077388.1291376892611
+Content-Type: text/xml; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-ID: <17493983.1291376892611.apache-soap.azdnms84>
+Content-Length: 492
+
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<SOAP-ENV:Body>
+<ns1:performQueryResponse xmlns:ns1="EwiQueryWS" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<return href ="cid:18703218.1291376892611.apache-soap.azdnms84"/>
+</ns1:performQueryResponse>
+
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+------=_Part_1677_7077388.1291376892611
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: 8bit
+Content-ID: <18703218.1291376892611.apache-soap.azdnms84>
+Content-Length: 850
+
+<?xml version="1.0" encoding="UTF-8"?>
+<EwiWSResult xmlns="www.ewi.ws">
+    <Dotaz>
+        <DotazTyp>VYDANI_SEZNAM_JH</DotazTyp>
+        <DotazParametr Hodnota="DRAB0415" Jmeno="Username"/>
+        <DotazParametr Hodnota="S_BCPZB" Jmeno="RozsahV"/>
+        <DotazParametr Hodnota="27867102" Jmeno="SubjektV"/>
+        <DotazParametr Hodnota="A" Jmeno="Popis"/>
+        <DotazParametr Hodnota="VSE" Jmeno="Rozsah"/>
+        <DotazParametr Hodnota="20100531" Jmeno="ObdobiV"/>
+        <DotazParametr Hodnota="***" Jmeno="Password"/>
+        <DotazParametr Hodnota="MOKAS42.01.00" Jmeno="DatovySoubor"/>
+    </Dotaz>
+    <ErrorLog>
+        <Status>ERROR</Status>
+        <ErrorCode>sql.pcgcall.InternalProcedureError</ErrorCode>
+        <ErrorText>Pro zadané vstupní parametry nebyla vybrána žádná data</ErrorText>
+    </ErrorLog>
+</EwiWSResult>
+
+------=_Part_1677_7077388.1291376892611--
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision:   1.0  $ -->
+<DefiniceDotazu xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=".\ews-par.xsd">
+    <TypDotazu>VYDANI_SEZNAM</TypDotazu>
+    <Popis>
+        Parametrický soubor dotazu: Seznam vydání datových souborů.
+        Účelem je získat podrobnější informace o zpracování zaslaných dat k výskytu DS. Základní informace 
+        poskytované dotazem VYSKYTY_SEZNAM bude možno doplnit tímto dotazem. Výstupem dotazu bude
+        seznam zpráv (vydání), které subjekt zaslal k danému výskytu DS, s uvedením výsledku zpracování
+        a seznamem případných chyb. Zaslání popisu chyb (seznam chybových hlášení ze žurnálu,chybných
+        kroků kontroly) je volitelné parametrem Popis(A/N).
+        Subjekt může požadovat všechny zprávy k danému výskytu, nebo pouze poslední zprávu, přičemž informace
+        o připraveném vydání jsou zasílány vždy.
+        Informace je neveřejná - uživatel komunikujícího subjektu musí být autentifikován (username/password) a autorizován.
+    </Popis>
+    <Parametr Nazev="Username" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Kód uživatele komunikujícího subjektu</Popis>
+        <HodnotaPar>DRAB0415</HodnotaPar>
+    </Parametr>
+    <Parametr Nazev="Password" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Heslo uživatele</Popis>
+        <HodnotaPar>9758!XTBcz</HodnotaPar>
+    </Parametr>
+    <Parametr Nazev="ObdobiV" Datatyp="Date" Povinny="A" Maska="DD.MM.YYYY">
+        <Popis>Vybrat výskyty se stavem_ke_dni shodným se zadaným datem</Popis>
+        <HodnotaPar>31.05.2010</HodnotaPar>
+    </Parametr>
+    <Parametr Nazev="SubjektV" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Kód vykazujícího subjektu</Popis>
+        <HodnotaPar>27867102</HodnotaPar>
+    </Parametr>
+    <Parametr Nazev="RozsahV" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Rozsah vykazujícího subjektu</Popis>
+        <HodnotaPar>VYKAZOVAT</HodnotaPar>
+    </Parametr>
+    <Parametr Nazev="DatovySoubor" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Kód datového souboru</Popis>
+        <HodnotaPar>MOKAS42.01.00</HodnotaPar>
+    </Parametr>
+    <Parametr Nazev="Rozsah" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Vybrat všechny zprávy k danému výskytu</Popis>
+        <SeznamHodnot>
+            <Hodnota Default="N" Jmeno="Vsechny" Hodnota="VSE"/>
+            <Hodnota Default="A" Jmeno="Posledni" Hodnota="POSLEDNI"/>
+        </SeznamHodnot>
+        <HodnotaPar>VSE</HodnotaPar>
+    </Parametr>
+    <Parametr Nazev="Popis" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Poskytnout textové popisy chyb</Popis>
+        <SeznamHodnot>
+            <Hodnota Default="N" Jmeno="Ano" Hodnota="A"/>
+            <Hodnota Default="A" Jmeno="Ne" Hodnota="N"/>
+        </SeznamHodnot>
+        <HodnotaPar>A</HodnotaPar>
+    </Parametr>
+</DefiniceDotazu>

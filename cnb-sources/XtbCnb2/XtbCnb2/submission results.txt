@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE LoadDataResponse SYSTEM "ZaslaniDatOdpoved.dtd">
+<LoadDataResponse>
+	<filename>ws2780377521.xml</filename>
+	<requestReceived>01.12.2010 12:43:24,334</requestReceived>
+	<responseSent>01.12.2010 12:43:25,210</responseSent>
+	<status category="Invalid data" code="Duplicate data">
+		<messages>
+		</messages>
+	</status>
+</LoadDataResponse>
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE LoadDataResponse SYSTEM "ZaslaniDatOdpoved.dtd">
+<LoadDataResponse>
+	<filename>ws2780377521.xml</filename>
+	<requestReceived>01.12.2010 12:43:24,334</requestReceived>
+	<responseSent>01.12.2010 12:43:25,210</responseSent>
+	<status category="Success" code="OK">
+		<messages>
+		</messages>
+	</status>
+</LoadDataResponse>
+
+OK/Warning -> OK

@@ -1,0 +1,88 @@
+﻿HTTP/1.1 200 OK
+Date: Wed, 01 Dec 2010 21:21:16 GMT
+Server: Oracle-Application-Server-10g
+Content-Length: 3827
+Set-Cookie: JSESSIONID=0a0402be1f45128a288aec0c4370a010eacf7d66c41a; Path=/ewi-ws; secure
+Cache-Control: private
+Content-Type: multipart/related; boundary="----=_Part_1155_28541032.1291237680807"; type="text/xml"; start="15413564.1291237680807.apache-soap.azdnms84"
+
+------=_Part_1155_28541032.1291237680807
+Content-Type: text/xml; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-ID: <15413564.1291237680807.apache-soap.azdnms84>
+Content-Length: 486
+
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<SOAP-ENV:Body>
+<ns1:getParamsResponse xmlns:ns1="EwiQueryWS" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<return href ="cid:31669479.1291237680807.apache-soap.azdnms84"/>
+</ns1:getParamsResponse>
+
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+------=_Part_1155_28541032.1291237680807
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: 8bit
+Content-ID: <31669479.1291237680807.apache-soap.azdnms84>
+Content-Length: 2899
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Revision:   1.0  $ -->
+<DefiniceDotazu xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=".\ews-par.xsd">
+    <TypDotazu>VYDANI_SEZNAM</TypDotazu>
+    <Popis>
+        Parametrický soubor dotazu: Seznam vydání datových souborů.
+        Účelem je získat podrobnější informace o zpracování zaslaných dat k výskytu DS. Základní informace 
+        poskytované dotazem VYSKYTY_SEZNAM bude možno doplnit tímto dotazem. Výstupem dotazu bude
+        seznam zpráv (vydání), které subjekt zaslal k danému výskytu DS, s uvedením výsledku zpracování
+        a seznamem případných chyb. Zaslání popisu chyb (seznam chybových hlášení ze žurnálu,chybných
+        kroků kontroly) je volitelné parametrem Popis(A/N).
+        Subjekt může požadovat všechny zprávy k danému výskytu, nebo pouze poslední zprávu, přičemž informace
+        o připraveném vydání jsou zasílány vždy.
+        Informace je neveřejná - uživatel komunikujícího subjektu musí být autentifikován (username/password) a autorizován.
+    </Popis>
+    <Parametr Nazev="Username" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Kód uživatele komunikujícího subjektu</Popis>
+        <HodnotaPar/>
+    </Parametr>
+    <Parametr Nazev="Password" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Heslo uživatele</Popis>
+        <HodnotaPar/>
+    </Parametr>
+    <Parametr Nazev="ObdobiV" Datatyp="Date" Povinny="A" Maska="DD.MM.YYYY">
+        <Popis>Vybrat výskyty se stavem_ke_dni shodným se zadaným datem</Popis>
+        <HodnotaPar/>
+    </Parametr>
+    <Parametr Nazev="SubjektV" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Kód vykazujícího subjektu</Popis>
+        <HodnotaPar/>
+    </Parametr>
+    <Parametr Nazev="RozsahV" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Rozsah vykazujícího subjektu</Popis>
+        <HodnotaPar/>
+    </Parametr>
+    <Parametr Nazev="DatovySoubor" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Kód datového souboru</Popis>
+        <HodnotaPar/>
+    </Parametr>
+    <Parametr Nazev="Rozsah" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Vybrat všechny zprávy k danému výskytu</Popis>
+        <SeznamHodnot>
+            <Hodnota Default="N" Jmeno="Vsechny" Hodnota="VSE"/>
+            <Hodnota Default="A" Jmeno="Posledni" Hodnota="POSLEDNI"/>
+        </SeznamHodnot>
+        <HodnotaPar/>
+    </Parametr>
+    <Parametr Nazev="Popis" Datatyp="String" Povinny="A" Maska="">
+        <Popis>Poskytnout textové popisy chyb</Popis>
+        <SeznamHodnot>
+            <Hodnota Default="N" Jmeno="Ano" Hodnota="A"/>
+            <Hodnota Default="A" Jmeno="Ne" Hodnota="N"/>
+        </SeznamHodnot>
+        <HodnotaPar/>
+    </Parametr>
+</DefiniceDotazu>
+
+------=_Part_1155_28541032.1291237680807--

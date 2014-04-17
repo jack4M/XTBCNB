@@ -1,0 +1,3 @@
+key to certificate: xtb.9758
+login to CNB: TDRAB0415
+pass to CNB: 9758.Dragonis

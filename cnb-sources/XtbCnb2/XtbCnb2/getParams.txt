@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ewiq="EwiQueryWS">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ewiq:getParams soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <queryType xsi:type="xsd:string">VYDANI_SEZNAM_JH</queryType>
+      </ewiq:getParams>
+   </soapenv:Body>
+</soapenv:Envelope>
